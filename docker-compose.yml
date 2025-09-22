@@ -1,0 +1,89 @@
+version: '3.8'
+
+services:
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: quizmaster_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword123
+      MYSQL_DATABASE: quizmaster_db
+      MYSQL_USER: quizmaster_user
+      MYSQL_PASSWORD: quizmaster_password
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - quizmaster_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "quizmaster_user", "-pquizmaster_password"]
+      timeout: 20s
+      retries: 10
+      interval: 10s
+
+  # Node.js API Server
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: quizmaster_api
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 5000
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: quizmaster_db
+      DB_USER: quizmaster_user
+      DB_PASSWORD: quizmaster_password
+      JWT_SECRET: your-super-secret-jwt-key-change-this-in-production-environment
+      JWT_EXPIRES_IN: 24h
+      CORS_ORIGIN: http://localhost:3000
+      RATE_LIMIT_WINDOW_MS: 900000
+      RATE_LIMIT_MAX_REQUESTS: 100
+      BCRYPT_ROUNDS: 12
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend/src:/app/src:ro
+      - ./backend/package.json:/app/package.json:ro
+    networks:
+      - quizmaster_network
+    depends_on:
+      mysql:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      timeout: 10s
+      retries: 5
+      interval: 30s
+
+  # PhpMyAdmin (for database management in development)
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: quizmaster_phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: quizmaster_user
+      PMA_PASSWORD: quizmaster_password
+      MYSQL_ROOT_PASSWORD: rootpassword123
+    ports:
+      - "8080:80"
+    networks:
+      - quizmaster_network
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  quizmaster_network:
+    driver: bridge

@@ -1,0 +1,239 @@
+# Artillery load test configuration for QuizMaster
+config:
+  target: 'http://localhost:3000'
+  phases:
+    # Warm up phase
+    - duration: 60
+      arrivalRate: 1
+      name: "Warm up"
+
+    # Load testing phase
+    - duration: 300
+      arrivalRate: 5
+      name: "Load test"
+
+    # Stress testing phase
+    - duration: 120
+      arrivalRate: 10
+      name: "Stress test"
+
+    # Spike testing phase
+    - duration: 60
+      arrivalRate: 20
+      name: "Spike test"
+
+  defaults:
+    headers:
+      User-Agent: "Artillery Load Test"
+
+  processor: "./load-test-functions.js"
+
+scenarios:
+  # User registration and login flow
+  - name: "User Authentication Flow"
+    weight: 20
+    flow:
+      - post:
+          url: "/api/auth/register"
+          json:
+            firstName: "Load"
+            lastName: "Test"
+            email: "loadtest{{ $randomInt(1, 10000) }}@example.com"
+            password: "LoadTest123!"
+            role: "user"
+          expect:
+            - statusCode: 201
+          capture:
+            - json: "$.data.user.id"
+              as: "userId"
+
+      - post:
+          url: "/api/auth/login"
+          json:
+            email: "loadtest{{ userId }}@example.com"
+            password: "LoadTest123!"
+          expect:
+            - statusCode: 200
+          capture:
+            - json: "$.data.token"
+              as: "authToken"
+
+  # Quiz browsing and taking
+  - name: "Quiz Taking Flow"
+    weight: 50
+    flow:
+      # Login as existing user
+      - post:
+          url: "/api/auth/login"
+          json:
+            email: "student@quizmaster.com"
+            password: "student123"
+          expect:
+            - statusCode: 200
+          capture:
+            - json: "$.data.token"
+              as: "authToken"
+
+      # Browse available quizzes
+      - get:
+          url: "/api/quizzes"
+          headers:
+            Authorization: "Bearer {{ authToken }}"
+          expect:
+            - statusCode: 200
+          capture:
+            - json: "$.data.quizzes[0].id"
+              as: "quizId"
+
+      # Get quiz details
+      - get:
+          url: "/api/quizzes/{{ quizId }}"
+          headers:
+            Authorization: "Bearer {{ authToken }}"
+          expect:
+            - statusCode: 200
+
+      # Get quiz questions
+      - get:
+          url: "/api/quizzes/{{ quizId }}/questions"
+          headers:
+            Authorization: "Bearer {{ authToken }}"
+          expect:
+            - statusCode: 200
+          capture:
+            - json: "$.data.questions"
+              as: "questions"
+
+      # Submit quiz attempt
+      - post:
+          url: "/api/quizzes/{{ quizId }}/attempts"
+          headers:
+            Authorization: "Bearer {{ authToken }}"
+          beforeRequest: "generateQuizAnswers"
+          json:
+            answers: "{{ answers }}"
+            timeTaken: "{{ $randomInt(60, 300) }}"
+          expect:
+            - statusCode: 201
+
+  # Gamification features
+  - name: "Gamification Flow"
+    weight: 20
+    flow:
+      # Login
+      - post:
+          url: "/api/auth/login"
+          json:
+            email: "student@quizmaster.com"
+            password: "student123"
+          capture:
+            - json: "$.data.token"
+              as: "authToken"
+
+      # Get user profile with gamification data
+      - get:
+          url: "/api/gamification/profile"
+          headers:
+            Authorization: "Bearer {{ authToken }}"
+          expect:
+            - statusCode: 200
+
+      # Get user badges
+      - get:
+          url: "/api/gamification/my-badges"
+          headers:
+            Authorization: "Bearer {{ authToken }}"
+          expect:
+            - statusCode: 200
+
+      # Get global leaderboard
+      - get:
+          url: "/api/gamification/leaderboard/global"
+          headers:
+            Authorization: "Bearer {{ authToken }}"
+          expect:
+            - statusCode: 200
+
+      # Get category leaderboard
+      - get:
+          url: "/api/gamification/leaderboard/category/Programming"
+          headers:
+            Authorization: "Bearer {{ authToken }}"
+          expect:
+            - statusCode: 200
+
+  # Trainer workflow
+  - name: "Trainer Flow"
+    weight: 10
+    flow:
+      # Login as trainer
+      - post:
+          url: "/api/auth/login"
+          json:
+            email: "trainer@quizmaster.com"
+            password: "trainer123"
+          capture:
+            - json: "$.data.token"
+              as: "authToken"
+
+      # Get trainer analytics
+      - get:
+          url: "/api/analytics/trainer-dashboard"
+          headers:
+            Authorization: "Bearer {{ authToken }}"
+          expect:
+            - statusCode: 200
+
+      # Create a new quiz
+      - post:
+          url: "/api/quizzes"
+          headers:
+            Authorization: "Bearer {{ authToken }}"
+          json:
+            title: "Load Test Quiz {{ $randomInt(1, 1000) }}"
+            description: "Quiz created during load testing"
+            category: "Programming"
+            difficulty: "medium"
+            timeLimit: 10
+            questions:
+              - question: "What is 2 + 2?"
+                options: ["3", "4", "5", "6"]
+                correctAnswer: 1
+                explanation: "Basic math"
+          expect:
+            - statusCode: 201
+          capture:
+            - json: "$.data.quiz.id"
+              as: "newQuizId"
+
+      # Get quiz analytics
+      - get:
+          url: "/api/analytics/quiz/{{ newQuizId }}"
+          headers:
+            Authorization: "Bearer {{ authToken }}"
+          expect:
+            - statusCode: 200
+
+# Performance thresholds
+expect:
+  # 95% of requests should complete within 2 seconds
+  - expression: "response.time < 2000"
+    as: "response_time"
+    strict: false
+
+  # 99% of requests should complete within 5 seconds
+  - expression: "response.time < 5000"
+    as: "response_time_99"
+    strict: true
+
+  # Success rate should be above 95%
+  - expression: "response.statusCode < 400"
+    as: "success_rate"
+    strict: true
+
+# Metrics to track
+metrics:
+  - name: "response_time_p95"
+    value: "response.time"
+  - name: "error_rate"
+    value: "response.statusCode >= 400 ? 1 : 0"
