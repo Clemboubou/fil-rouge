@@ -22,21 +22,41 @@
       <form class="mt-8 space-y-6" @submit.prevent="handleSubmit">
         <div class="space-y-4">
           <div>
-            <label for="username" class="block text-sm font-medium text-gray-700">
-              Username
+            <label for="firstName" class="block text-sm font-medium text-gray-700">
+              First Name
             </label>
             <input
-              id="username"
-              v-model="form.username"
-              name="username"
+              id="firstName"
+              v-model="form.firstName"
+              name="firstName"
               type="text"
-              autocomplete="username"
+              autocomplete="given-name"
               required
+              data-cy="first-name-input"
               class="mt-1 input"
-              :class="{ 'border-red-500': errors.username }"
-              placeholder="Enter your username"
+              :class="{ 'border-red-500': errors.firstName }"
+              placeholder="Enter your first name"
             />
-            <p v-if="errors.username" class="mt-1 text-sm text-red-600">{{ errors.username }}</p>
+            <p v-if="errors.firstName" data-cy="first-name-error" class="mt-1 text-sm text-red-600">{{ errors.firstName }}</p>
+          </div>
+
+          <div>
+            <label for="lastName" class="block text-sm font-medium text-gray-700">
+              Last Name
+            </label>
+            <input
+              id="lastName"
+              v-model="form.lastName"
+              name="lastName"
+              type="text"
+              autocomplete="family-name"
+              required
+              data-cy="last-name-input"
+              class="mt-1 input"
+              :class="{ 'border-red-500': errors.lastName }"
+              placeholder="Enter your last name"
+            />
+            <p v-if="errors.lastName" data-cy="last-name-error" class="mt-1 text-sm text-red-600">{{ errors.lastName }}</p>
           </div>
 
           <div>
@@ -50,11 +70,12 @@
               type="email"
               autocomplete="email"
               required
+              data-cy="email-input"
               class="mt-1 input"
               :class="{ 'border-red-500': errors.email }"
               placeholder="Enter your email address"
             />
-            <p v-if="errors.email" class="mt-1 text-sm text-red-600">{{ errors.email }}</p>
+            <p v-if="errors.email" data-cy="email-error" class="mt-1 text-sm text-red-600">{{ errors.email }}</p>
           </div>
 
           <div>
@@ -68,11 +89,12 @@
               type="password"
               autocomplete="new-password"
               required
+              data-cy="password-input"
               class="mt-1 input"
               :class="{ 'border-red-500': errors.password }"
               placeholder="Enter your password"
             />
-            <p v-if="errors.password" class="mt-1 text-sm text-red-600">{{ errors.password }}</p>
+            <p v-if="errors.password" data-cy="password-error" class="mt-1 text-sm text-red-600">{{ errors.password }}</p>
             <p class="mt-1 text-sm text-gray-500">
               Password must be at least 8 characters long
             </p>
@@ -89,11 +111,12 @@
               type="password"
               autocomplete="new-password"
               required
+              data-cy="confirm-password-input"
               class="mt-1 input"
               :class="{ 'border-red-500': errors.confirmPassword }"
               placeholder="Confirm your password"
             />
-            <p v-if="errors.confirmPassword" class="mt-1 text-sm text-red-600">{{ errors.confirmPassword }}</p>
+            <p v-if="errors.confirmPassword" data-cy="confirm-password-error" class="mt-1 text-sm text-red-600">{{ errors.confirmPassword }}</p>
           </div>
 
           <div>
@@ -105,14 +128,15 @@
               v-model="form.role"
               name="role"
               required
+              data-cy="role-select"
               class="mt-1 input"
               :class="{ 'border-red-500': errors.role }"
             >
               <option value="">Select account type</option>
-              <option value="student">Student - Take quizzes and track progress</option>
+              <option value="user">Student - Take quizzes and track progress</option>
               <option value="trainer">Trainer - Create and manage quizzes</option>
             </select>
-            <p v-if="errors.role" class="mt-1 text-sm text-red-600">{{ errors.role }}</p>
+            <p v-if="errors.role" data-cy="role-error" class="mt-1 text-sm text-red-600">{{ errors.role }}</p>
           </div>
         </div>
 
@@ -123,6 +147,7 @@
             name="terms"
             type="checkbox"
             required
+            data-cy="terms-checkbox"
             class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
             :class="{ 'border-red-500': errors.agreeToTerms }"
           />
@@ -133,12 +158,13 @@
             <a href="#" class="text-primary-600 hover:text-primary-500">Privacy Policy</a>
           </label>
         </div>
-        <p v-if="errors.agreeToTerms" class="text-sm text-red-600">{{ errors.agreeToTerms }}</p>
+        <p v-if="errors.agreeToTerms" data-cy="terms-error" class="text-sm text-red-600">{{ errors.agreeToTerms }}</p>
 
         <div>
           <button
             type="submit"
             :disabled="authStore.isLoading"
+            data-cy="register-button"
             class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             <span class="absolute left-0 inset-y-0 flex items-center pl-3">
@@ -173,7 +199,8 @@ const router = useRouter()
 const authStore = useAuthStore()
 
 const form = reactive({
-  username: '',
+  firstName: '',
+  lastName: '',
   email: '',
   password: '',
   confirmPassword: '',
@@ -186,12 +213,16 @@ const errors = ref({})
 const validateForm = () => {
   errors.value = {}
 
-  if (!form.username) {
-    errors.value.username = 'Username is required'
-  } else if (form.username.length < 3) {
-    errors.value.username = 'Username must be at least 3 characters'
-  } else if (!/^[a-zA-Z0-9_]+$/.test(form.username)) {
-    errors.value.username = 'Username can only contain letters, numbers, and underscores'
+  if (!form.firstName) {
+    errors.value.firstName = 'First name is required'
+  } else if (form.firstName.length < 2) {
+    errors.value.firstName = 'First name must be at least 2 characters'
+  }
+
+  if (!form.lastName) {
+    errors.value.lastName = 'Last name is required'
+  } else if (form.lastName.length < 2) {
+    errors.value.lastName = 'Last name must be at least 2 characters'
   }
 
   if (!form.email) {
@@ -230,7 +261,8 @@ const handleSubmit = async () => {
 
   try {
     await authStore.register({
-      username: form.username,
+      firstName: form.firstName,
+      lastName: form.lastName,
       email: form.email,
       password: form.password,
       role: form.role
@@ -246,9 +278,9 @@ const handleSubmit = async () => {
     form.password = ''
     form.confirmPassword = ''
 
-    // Focus username field for retry
+    // Focus first name field for retry
     setTimeout(() => {
-      document.getElementById('username')?.focus()
+      document.getElementById('firstName')?.focus()
     }, 100)
   }
 }

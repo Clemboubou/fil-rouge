@@ -35,14 +35,15 @@
               <div class="relative" ref="userMenuRef">
                 <button
                   @click="showUserMenu = !showUserMenu"
+                  data-cy="user-menu"
                   class="flex items-center space-x-2 text-gray-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
                 >
                   <div class="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center">
                     <span class="text-primary-600 font-medium text-xs">
-                      {{ authStore.user?.username?.charAt(0).toUpperCase() }}
+                      {{ (authStore.user?.firstName || authStore.user?.username || 'U').charAt(0).toUpperCase() }}
                     </span>
                   </div>
-                  <span>{{ authStore.user?.username }}</span>
+                  <span>{{ authStore.user?.firstName || authStore.user?.username || 'User' }}</span>
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                   </svg>
@@ -58,6 +59,7 @@
                   </div>
                   <button
                     @click="handleLogout"
+                    data-cy="logout-button"
                     class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
                   >
                     Sign out
@@ -69,6 +71,7 @@
             <template v-else>
               <router-link
                 to="/login"
+                data-cy="login-link"
                 class="text-gray-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
               >
                 Sign in

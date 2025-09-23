@@ -30,11 +30,12 @@
               type="email"
               autocomplete="email"
               required
+              data-cy="email-input"
               class="relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm"
               :class="{ 'border-red-500': errors.email }"
               placeholder="Email address"
             />
-            <p v-if="errors.email" class="mt-1 text-sm text-red-600">{{ errors.email }}</p>
+            <p v-if="errors.email" data-cy="email-error" class="mt-1 text-sm text-red-600">{{ errors.email }}</p>
           </div>
           <div>
             <label for="password" class="sr-only">Password</label>
@@ -45,11 +46,12 @@
               type="password"
               autocomplete="current-password"
               required
+              data-cy="password-input"
               class="relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm"
               :class="{ 'border-red-500': errors.password }"
               placeholder="Password"
             />
-            <p v-if="errors.password" class="mt-1 text-sm text-red-600">{{ errors.password }}</p>
+            <p v-if="errors.password" data-cy="password-error" class="mt-1 text-sm text-red-600">{{ errors.password }}</p>
           </div>
         </div>
 
@@ -78,6 +80,7 @@
           <button
             type="submit"
             :disabled="authStore.isLoading"
+            data-cy="login-button"
             class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             <span class="absolute left-0 inset-y-0 flex items-center pl-3">

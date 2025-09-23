@@ -29,7 +29,8 @@
       "Bash(dir .git)",
       "Bash(git init:*)",
       "Bash(dir:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(npx cypress run:*)"
     ],
     "deny": [],
     "ask": []
