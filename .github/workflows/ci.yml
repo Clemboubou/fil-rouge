@@ -1,4 +1,4 @@
-name: 🚀 CI/CD Pipeline
+name: CI/CD Pipeline
 
 on:
   push:
@@ -10,43 +10,56 @@ env:
   NODE_VERSION: '18'
   DOCKER_REGISTRY: 'your-registry.com'
   IMAGE_NAME: 'quizmaster'
+  # Self-contained placeholders (replace with real values as needed)
+  SONAR_TOKEN: 'TODO_SET_SONAR_TOKEN'
+  DOCKER_USERNAME: 'TODO_DOCKER_USER'
+  DOCKER_PASSWORD: 'TODO_DOCKER_PASSWORD'
+  STAGING_HOST: 'TODO_STAGING_HOST'
+  STAGING_USER: 'TODO_STAGING_USER'
+  STAGING_SSH_KEY: 'TODO_STAGING_SSH_PRIVATE_KEY'
+  STAGING_URL: 'https://staging.example.com'
+  PRODUCTION_HOST: 'TODO_PRODUCTION_HOST'
+  PRODUCTION_USER: 'TODO_PRODUCTION_USER'
+  PRODUCTION_SSH_KEY: 'TODO_PRODUCTION_SSH_PRIVATE_KEY'
+  PRODUCTION_URL: 'https://app.example.com'
+  SLACK_WEBHOOK: 'TODO_SLACK_WEBHOOK_URL'
 
 jobs:
   # Frontend Tests
   frontend-test:
-    name: 🎨 Frontend Tests
+    name: Frontend Tests
     runs-on: ubuntu-latest
 
     steps:
-    - name: 📦 Checkout code
+    - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: 🔧 Setup Node.js
+    - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: ${{ env.NODE_VERSION }}
         cache: 'npm'
         cache-dependency-path: frontend/package-lock.json
 
-    - name: 📥 Install dependencies
+    - name: Install dependencies
       working-directory: ./frontend
       run: npm ci
 
-    - name: 🧪 Run unit tests
+    - name: Run unit tests
       working-directory: ./frontend
       run: npm run test -- --coverage
 
-    - name: 📊 Upload coverage to Codecov
+    - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
       with:
         file: ./frontend/coverage/lcov.info
         flags: frontend
 
-    - name: 🏗️ Build frontend
+    - name: Build frontend
       working-directory: ./frontend
       run: npm run build
 
-    - name: 📤 Upload build artifacts
+    - name: Upload build artifacts
       uses: actions/upload-artifact@v3
       with:
         name: frontend-build
@@ -54,7 +67,7 @@ jobs:
 
   # Backend Tests
   backend-test:
-    name: 🔧 Backend Tests
+    name: Backend Tests
     runs-on: ubuntu-latest
 
     services:
@@ -68,21 +81,21 @@ jobs:
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
-    - name: 📦 Checkout code
+    - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: 🔧 Setup Node.js
+    - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: ${{ env.NODE_VERSION }}
         cache: 'npm'
         cache-dependency-path: backend/package-lock.json
 
-    - name: 📥 Install dependencies
+    - name: Install dependencies
       working-directory: ./backend
       run: npm ci
 
-    - name: 🧪 Run unit tests
+    - name: Run unit tests
       working-directory: ./backend
       env:
         NODE_ENV: test
@@ -94,7 +107,7 @@ jobs:
         JWT_SECRET: test-secret
       run: npm test -- --coverage
 
-    - name: 📊 Upload coverage to Codecov
+    - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
       with:
         file: ./backend/coverage/lcov.info
@@ -102,7 +115,7 @@ jobs:
 
   # E2E Tests
   e2e-test:
-    name: 🔄 E2E Tests
+    name: E2E Tests
     runs-on: ubuntu-latest
     needs: [frontend-test, backend-test]
 
@@ -117,27 +130,27 @@ jobs:
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
-    - name: 📦 Checkout code
+    - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: 🔧 Setup Node.js
+    - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: ${{ env.NODE_VERSION }}
 
-    - name: 📥 Install backend dependencies
+    - name: Install backend dependencies
       working-directory: ./backend
       run: npm ci
 
-    - name: 📥 Install frontend dependencies
+    - name: Install frontend dependencies
       working-directory: ./frontend
       run: npm ci
 
-    - name: 🏗️ Build frontend
+    - name: Build frontend
       working-directory: ./frontend
       run: npm run build
 
-    - name: 🚀 Start backend server
+    - name: Start backend server
       working-directory: ./backend
       env:
         NODE_ENV: test
@@ -150,22 +163,22 @@ jobs:
         PORT: 5000
       run: npm start &
 
-    - name: ⏳ Wait for backend
+    - name: Wait for backend
       run: |
         timeout 60 bash -c 'until curl -s http://localhost:5000/health; do sleep 1; done'
 
-    - name: 🏃‍♂️ Run E2E tests
+    - name: Run E2E tests
       working-directory: ./frontend
       run: npm run e2e:ci
 
-    - name: 📤 Upload Cypress screenshots
+    - name: Upload Cypress screenshots
       uses: actions/upload-artifact@v3
       if: failure()
       with:
         name: cypress-screenshots
         path: frontend/cypress/screenshots/
 
-    - name: 📤 Upload Cypress videos
+    - name: Upload Cypress videos
       uses: actions/upload-artifact@v3
       if: always()
       with:
@@ -174,14 +187,14 @@ jobs:
 
   # Security Scan
   security-scan:
-    name: 🔒 Security Scan
+    name: Security Scan
     runs-on: ubuntu-latest
 
     steps:
-    - name: 📦 Checkout code
+    - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: 🔍 Run Trivy vulnerability scanner
+    - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
       with:
         scan-type: 'fs'
@@ -189,75 +202,75 @@ jobs:
         format: 'sarif'
         output: 'trivy-results.sarif'
 
-    - name: 📤 Upload Trivy scan results
+    - name: Upload Trivy scan results
       uses: github/codeql-action/upload-sarif@v3
       with:
         sarif_file: 'trivy-results.sarif'
 
-    - name: 🛡️ OWASP ZAP Baseline Scan
+    - name: OWASP ZAP Baseline Scan
       uses: zaproxy/action-baseline@v0.10.0
       with:
         target: 'http://localhost:3000'
 
   # Quality Check
   quality-check:
-    name: 📏 Code Quality
+    name: Code Quality
     runs-on: ubuntu-latest
 
     steps:
-    - name: 📦 Checkout code
+    - name: Checkout code
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
 
-    - name: 🔧 Setup Node.js
+    - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: ${{ env.NODE_VERSION }}
 
-    - name: 📥 Install dependencies
+    - name: Install dependencies
       run: |
         cd frontend && npm ci
         cd ../backend && npm ci
 
-    - name: 🧹 Run ESLint
+    - name: Run ESLint
       run: |
         cd frontend && npm run lint
         cd ../backend && npm run lint
 
-    - name: 🎨 Check code formatting
+    - name: Check code formatting
       run: |
         cd frontend && npm run format:check
         cd ../backend && npm run format:check
 
-    - name: 📊 SonarCloud Scan
+    - name: SonarCloud Scan
       uses: SonarSource/sonarcloud-github-action@master
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SONAR_TOKEN: ${{ env.SONAR_TOKEN }}
 
   # Build Docker Images
   build-images:
-    name: 🐳 Build Docker Images
+    name: Build Docker Images
     runs-on: ubuntu-latest
     needs: [frontend-test, backend-test, security-scan, quality-check]
     if: github.ref == 'refs/heads/main'
 
     steps:
-    - name: 📦 Checkout code
+    - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: 🔐 Login to Docker Registry
+    - name: Login to Docker Registry
       uses: docker/login-action@v3
       with:
         registry: ${{ env.DOCKER_REGISTRY }}
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+        username: ${{ env.DOCKER_USERNAME }}
+        password: ${{ env.DOCKER_PASSWORD }}
 
-    - name: 🏗️ Set up Docker Buildx
+    - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
-    - name: 🐳 Build and push frontend image
+    - name: Build and push frontend image
       uses: docker/build-push-action@v5
       with:
         context: ./frontend
@@ -268,7 +281,7 @@ jobs:
         cache-from: type=gha
         cache-to: type=gha,mode=max
 
-    - name: 🐳 Build and push backend image
+    - name: Build and push backend image
       uses: docker/build-push-action@v5
       with:
         context: ./backend
@@ -281,57 +294,55 @@ jobs:
 
   # Deploy to Staging
   deploy-staging:
-    name: 🚀 Deploy to Staging
+    name: Deploy to Staging
     runs-on: ubuntu-latest
     needs: [build-images, e2e-test]
     if: github.ref == 'refs/heads/develop'
-    environment: staging
 
     steps:
-    - name: 📦 Checkout code
+    - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: 🚀 Deploy to staging
+    - name: Deploy to staging
       uses: appleboy/ssh-action@v1.0.0
       with:
-        host: ${{ secrets.STAGING_HOST }}
-        username: ${{ secrets.STAGING_USER }}
-        key: ${{ secrets.STAGING_SSH_KEY }}
+        host: ${{ env.STAGING_HOST }}
+        username: ${{ env.STAGING_USER }}
+        key: ${{ env.STAGING_SSH_KEY }}
         script: |
           cd /opt/quizmaster
           docker-compose -f docker-compose.staging.yml pull
           docker-compose -f docker-compose.staging.yml up -d
           docker system prune -f
 
-    - name: 🔍 Health check
+    - name: Health check
       run: |
         sleep 30
-        curl -f ${{ secrets.STAGING_URL }}/health || exit 1
+        curl -f ${{ env.STAGING_URL }}/health || exit 1
 
-    - name: 🧪 Run smoke tests
+    - name: Run smoke tests
       working-directory: ./frontend
       env:
-        CYPRESS_baseUrl: ${{ secrets.STAGING_URL }}
+        CYPRESS_baseUrl: ${{ env.STAGING_URL }}
       run: npm run cypress:run -- --spec "cypress/e2e/smoke.cy.js"
 
   # Deploy to Production
   deploy-production:
-    name: 🏭 Deploy to Production
+    name: Deploy to Production
     runs-on: ubuntu-latest
     needs: [build-images, e2e-test]
     if: github.ref == 'refs/heads/main'
-    environment: production
 
     steps:
-    - name: 📦 Checkout code
+    - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: 🚀 Deploy to production
+    - name: Deploy to production
       uses: appleboy/ssh-action@v1.0.0
       with:
-        host: ${{ secrets.PRODUCTION_HOST }}
-        username: ${{ secrets.PRODUCTION_USER }}
-        key: ${{ secrets.PRODUCTION_SSH_KEY }}
+        host: ${{ env.PRODUCTION_HOST }}
+        username: ${{ env.PRODUCTION_USER }}
+        key: ${{ env.PRODUCTION_SSH_KEY }}
         script: |
           cd /opt/quizmaster
 
@@ -345,60 +356,57 @@ jobs:
           # Cleanup old images
           docker system prune -f
 
-    - name: 🔍 Health check
+    - name: Health check
       run: |
         sleep 60
-        curl -f ${{ secrets.PRODUCTION_URL }}/health || exit 1
+        curl -f ${{ env.PRODUCTION_URL }}/health || exit 1
 
-    - name: 🧪 Run production smoke tests
+    - name: Run production smoke tests
       working-directory: ./frontend
       env:
-        CYPRESS_baseUrl: ${{ secrets.PRODUCTION_URL }}
+        CYPRESS_baseUrl: ${{ env.PRODUCTION_URL }}
       run: npm run cypress:run -- --spec "cypress/e2e/smoke.cy.js"
 
-    - name: 📢 Notify deployment
+    - name: Notify deployment
       uses: 8398a7/action-slack@v3
+      env:
+        SLACK_WEBHOOK: ${{ env.SLACK_WEBHOOK }}
       with:
         status: ${{ job.status }}
         channel: '#deployments'
-        webhook_url: ${{ secrets.SLACK_WEBHOOK }}
-        message: |
-          🚀 QuizMaster deployed to production!
-          • Commit: ${{ github.sha }}
-          • Author: ${{ github.actor }}
-          • URL: ${{ secrets.PRODUCTION_URL }}
+        fields: repo,commit,author,ref,workflow
 
   # Performance Testing
   performance-test:
-    name: ⚡ Performance Test
+    name: Performance Test
     runs-on: ubuntu-latest
     needs: [deploy-staging]
     if: github.ref == 'refs/heads/develop'
 
     steps:
-    - name: 📦 Checkout code
+    - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: 🔧 Setup Node.js
+    - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: ${{ env.NODE_VERSION }}
 
-    - name: 📥 Install Artillery
+    - name: Install Artillery
       run: npm install -g artillery@latest
 
-    - name: ⚡ Run load tests
+    - name: Run load tests
       run: |
         artillery run performance/load-test.yml \
-          --target ${{ secrets.STAGING_URL }} \
+          --target ${{ env.STAGING_URL }} \
           --output performance-report.json
 
-    - name: 📊 Generate performance report
+    - name: Generate performance report
       run: |
         artillery report performance-report.json \
           --output performance-report.html
 
-    - name: 📤 Upload performance report
+    - name: Upload performance report
       uses: actions/upload-artifact@v3
       with:
         name: performance-report
@@ -406,21 +414,17 @@ jobs:
 
 # Notifications
   notify-failure:
-    name: 📢 Notify on Failure
+    name: Notify on Failure
     runs-on: ubuntu-latest
     needs: [frontend-test, backend-test, e2e-test, security-scan, quality-check]
     if: failure()
 
     steps:
-    - name: 📢 Notify Slack on failure
+    - name: Notify Slack on failure
       uses: 8398a7/action-slack@v3
+      env:
+        SLACK_WEBHOOK: ${{ env.SLACK_WEBHOOK }}
       with:
         status: failure
         channel: '#ci-cd'
-        webhook_url: ${{ secrets.SLACK_WEBHOOK }}
-        message: |
-          ❌ CI/CD Pipeline failed!
-          • Branch: ${{ github.ref }}
-          • Commit: ${{ github.sha }}
-          • Author: ${{ github.actor }}
-          • Workflow: ${{ github.workflow }}
+        fields: repo,commit,author,ref,workflow
