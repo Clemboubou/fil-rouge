@@ -30,7 +30,10 @@
       "Bash(git init:*)",
       "Bash(dir:*)",
       "Bash(git add:*)",
-      "Bash(npx cypress run:*)"
+      "Bash(npx cypress run:*)",
+      "Bash(git push:*)",
+      "Bash(git reset:*)",
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []
