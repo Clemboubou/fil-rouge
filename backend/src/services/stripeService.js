@@ -1,10 +1,17 @@
 const Stripe = require('stripe');
 const { User, Subscription } = require('../models');
 
-const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
+const stripe = process.env.STRIPE_SECRET_KEY ? Stripe(process.env.STRIPE_SECRET_KEY) : null;
 
 class StripeService {
+  static checkStripeInitialized() {
+    if (!stripe) {
+      throw new Error('Stripe is not configured. Please set STRIPE_SECRET_KEY environment variable.');
+    }
+  }
+
   static async createCustomer(user) {
+    this.checkStripeInitialized();
     try {
       const customer = await stripe.customers.create({
         email: user.email,

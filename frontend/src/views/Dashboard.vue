@@ -93,7 +93,7 @@
                     Voir tous
                   </router-link>
                 </div>
-                <QuizList :limit="6" />
+                <QuizList :limit="6" @take-quiz="handleTakeQuiz" />
               </div>
             </div>
 
@@ -160,6 +160,7 @@
 
 <script>
 import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { useQuizStore } from '@/stores/quiz'
 import UserProgress from '@/components/UserProgress.vue'
@@ -177,6 +178,7 @@ export default {
     QuizList
   },
   setup() {
+    const router = useRouter()
     const authStore = useAuthStore()
     const quizStore = useQuizStore()
     const isLoading = ref(true)
@@ -210,6 +212,10 @@ export default {
       }
     }
 
+    const handleTakeQuiz = (quiz) => {
+      router.push(`/quiz/${quiz.id}`)
+    }
+
     onMounted(() => {
       initializeDashboard()
     })
@@ -218,7 +224,8 @@ export default {
       authStore,
       quizStore,
       isLoading,
-      userStats
+      userStats,
+      handleTakeQuiz
     }
   }
 }
