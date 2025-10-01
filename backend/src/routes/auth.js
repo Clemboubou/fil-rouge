@@ -94,6 +94,23 @@ router.post('/register',
   authController.register
 );
 
+// Verify email with code
+router.post('/verify-email',
+  [
+    body('email').isEmail().normalizeEmail(),
+    body('code').isLength({ min: 6, max: 6 })
+  ],
+  authController.verifyEmail
+);
+
+// Resend verification code
+router.post('/resend-verification',
+  [
+    body('email').isEmail().normalizeEmail()
+  ],
+  authController.resendVerificationCode
+);
+
 /**
  * @swagger
  * /auth/login:

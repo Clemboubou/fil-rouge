@@ -18,6 +18,7 @@ const getAllQuizzes = async (req, res, next) => {
 
     const offset = (page - 1) * limit;
     const whereClause = {};
+    const conditions = [];
 
     if (category) {
       whereClause.category = category;
@@ -35,20 +36,36 @@ const getAllQuizzes = async (req, res, next) => {
       whereClause.creatorId = creator;
     }
 
-    if (search) {
-      whereClause[Op.or] = [
-        { title: { [Op.like]: `%${search}%` } },
-        { description: { [Op.like]: `%${search}%` } }
-      ];
-    }
-
     // Non-trainers can only see published quizzes
     if (req.user.role === 'user') {
       whereClause.isPublished = true;
     }
 
+    // Handle search separately to combine with other filters
+    if (search) {
+      const searchConditions = {
+        [Op.or]: [
+          { title: { [Op.like]: `%${search}%` } },
+          { description: { [Op.like]: `%${search}%` } }
+        ]
+      };
+
+      // If we have other filters, combine them with AND
+      if (Object.keys(whereClause).length > 0) {
+        conditions.push(whereClause);
+        conditions.push(searchConditions);
+      } else {
+        Object.assign(whereClause, searchConditions);
+      }
+    }
+
+    // Build final where clause
+    const finalWhereClause = conditions.length > 0
+      ? { [Op.and]: conditions }
+      : whereClause;
+
     const { count, rows: quizzes } = await Quiz.findAndCountAll({
-      where: whereClause,
+      where: finalWhereClause,
       include: [
         {
           model: User,

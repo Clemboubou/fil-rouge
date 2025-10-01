@@ -1,12 +1,12 @@
 <template>
-  <div class="min-h-screen bg-gray-50 py-8">
+  <div class="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <!-- Header Section -->
       <div class="mb-8">
         <div class="flex items-center justify-between">
           <div>
-            <h1 class="text-3xl font-bold text-gray-900">📊 Analytics Dashboard</h1>
-            <p class="mt-2 text-gray-600">
+            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">📊 Analytics Dashboard</h1>
+            <p class="mt-2 text-gray-600 dark:text-gray-400 dark:text-gray-500">
               Analyse détaillée des performances et de l'engagement des utilisateurs
             </p>
           </div>
@@ -17,7 +17,7 @@
             <div class="min-w-0 flex-1">
               <select
                 v-model="selectedQuiz"
-                class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
+                class="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
               >
                 <option value="">Tous les quiz</option>
                 <option
@@ -34,7 +34,7 @@
             <div class="min-w-0 flex-1">
               <select
                 v-model="selectedTimeRange"
-                class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
+                class="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
               >
                 <option value="7d">7 derniers jours</option>
                 <option value="30d">30 derniers jours</option>
@@ -95,7 +95,7 @@
       <div v-if="loading" class="flex items-center justify-center py-12">
         <div class="flex items-center space-x-3">
           <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
-          <span class="text-gray-600">Chargement des analytics...</span>
+          <span class="text-gray-600 dark:text-gray-400 dark:text-gray-500">Chargement des analytics...</span>
         </div>
       </div>
 
@@ -103,13 +103,13 @@
       <div v-else>
         <!-- Basic Analytics (Always Visible) -->
         <div class="mb-8">
-          <h2 class="text-xl font-semibold text-gray-900 mb-4">📈 Vue d'ensemble</h2>
+          <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">📈 Vue d'ensemble</h2>
           <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div class="bg-white rounded-lg shadow p-6">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
               <div class="flex items-center">
                 <div class="flex-1">
-                  <p class="text-sm font-medium text-gray-600">Quiz Créés</p>
-                  <p class="text-2xl font-bold text-gray-900">{{ basicStats.totalQuizzes }}</p>
+                  <p class="text-sm font-medium text-gray-600 dark:text-gray-400 dark:text-gray-500">Quiz Créés</p>
+                  <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ basicStats.totalQuizzes }}</p>
                 </div>
                 <div class="text-blue-500">
                   <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -119,11 +119,11 @@
               </div>
             </div>
 
-            <div class="bg-white rounded-lg shadow p-6">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
               <div class="flex items-center">
                 <div class="flex-1">
-                  <p class="text-sm font-medium text-gray-600">Participants Totaux</p>
-                  <p class="text-2xl font-bold text-gray-900">{{ basicStats.totalParticipants }}</p>
+                  <p class="text-sm font-medium text-gray-600 dark:text-gray-400 dark:text-gray-500">Participants Totaux</p>
+                  <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ basicStats.totalParticipants }}</p>
                 </div>
                 <div class="text-green-500">
                   <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -133,11 +133,11 @@
               </div>
             </div>
 
-            <div class="bg-white rounded-lg shadow p-6">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
               <div class="flex items-center">
                 <div class="flex-1">
-                  <p class="text-sm font-medium text-gray-600">Taux Moyen</p>
-                  <p class="text-2xl font-bold text-gray-900">{{ basicStats.averageSuccessRate }}%</p>
+                  <p class="text-sm font-medium text-gray-600 dark:text-gray-400 dark:text-gray-500">Taux Moyen</p>
+                  <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ basicStats.averageSuccessRate }}%</p>
                 </div>
                 <div class="text-yellow-500">
                   <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -147,12 +147,12 @@
               </div>
             </div>
 
-            <div class="bg-white rounded-lg shadow p-6">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
               <div class="flex items-center">
                 <div class="flex-1">
-                  <p class="text-sm font-medium text-gray-600">Cette Semaine</p>
-                  <p class="text-2xl font-bold text-gray-900">{{ basicStats.weeklyParticipants }}</p>
-                  <p class="text-xs text-green-600 mt-1">+{{ basicStats.weeklyGrowth }}% vs semaine dernière</p>
+                  <p class="text-sm font-medium text-gray-600 dark:text-gray-400 dark:text-gray-500">Cette Semaine</p>
+                  <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ basicStats.weeklyParticipants }}</p>
+                  <p class="text-xs text-green-600 dark:text-green-400 mt-1">+{{ basicStats.weeklyGrowth }}% vs semaine dernière</p>
                 </div>
                 <div class="text-purple-500">
                   <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -176,51 +176,51 @@
         <!-- Free User Limited View -->
         <div v-else class="space-y-6">
           <!-- Simple Quiz List -->
-          <div class="bg-white rounded-lg shadow overflow-hidden">
-            <div class="px-6 py-4 border-b border-gray-200">
-              <h3 class="text-lg font-semibold text-gray-900">📋 Mes Quiz - Vue Simplifiée</h3>
-              <p class="text-sm text-gray-600 mt-1">
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
+            <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white">📋 Mes Quiz - Vue Simplifiée</h3>
+              <p class="text-sm text-gray-600 dark:text-gray-400 dark:text-gray-500 mt-1">
                 Passez au plan Premium pour accéder aux analytics détaillés et aux graphiques interactifs.
               </p>
             </div>
             <div class="overflow-x-auto">
               <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
+                <thead class="bg-gray-50 dark:bg-gray-900">
                   <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quiz</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Participants</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Créé le</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 dark:text-gray-500 uppercase tracking-wider">Quiz</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 dark:text-gray-500 uppercase tracking-wider">Participants</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 dark:text-gray-500 uppercase tracking-wider">Statut</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 dark:text-gray-500 uppercase tracking-wider">Créé le</th>
                   </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+                <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200">
                   <tr
                     v-for="quiz in basicQuizStats"
                     :key="quiz.id"
-                    class="hover:bg-gray-50"
+                    class="hover:bg-gray-50 dark:hover:bg-gray-700 dark:bg-gray-900"
                   >
                     <td class="px-6 py-4 whitespace-nowrap">
                       <div class="flex items-center">
                         <div>
-                          <div class="text-sm font-medium text-gray-900">{{ quiz.title }}</div>
-                          <div class="text-sm text-gray-500">{{ quiz.category }}</div>
+                          <div class="text-sm font-medium text-gray-900 dark:text-white">{{ quiz.title }}</div>
+                          <div class="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500">{{ quiz.category }}</div>
                         </div>
                       </div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                      <div class="text-sm text-gray-900">{{ quiz.participants }}</div>
+                      <div class="text-sm text-gray-900 dark:text-white">{{ quiz.participants }}</div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                       <span
                         :class="[
                           'inline-flex px-2 py-1 text-xs font-semibold rounded-full',
-                          quiz.isPublished ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
+                          quiz.isPublished ? 'bg-green-100 dark:bg-green-900 text-green-800' : 'bg-yellow-100 dark:bg-yellow-900 text-yellow-800'
                         ]"
                       >
                         {{ quiz.isPublished ? 'Publié' : 'Brouillon' }}
                       </span>
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500">
                       {{ formatDate(quiz.createdAt) }}
                     </td>
                   </tr>
@@ -230,12 +230,12 @@
           </div>
 
           <!-- Premium Features Preview -->
-          <div class="bg-white rounded-lg shadow overflow-hidden opacity-60">
-            <div class="px-6 py-4 border-b border-gray-200 relative">
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden opacity-60">
+            <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 relative">
               <div class="absolute inset-0 bg-gradient-to-r from-transparent to-white z-10"></div>
-              <h3 class="text-lg font-semibold text-gray-900">📊 Analytics Avancés (Premium)</h3>
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white">📊 Analytics Avancés (Premium)</h3>
               <div class="absolute top-4 right-4 z-20">
-                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 dark:bg-yellow-900 text-yellow-800">
                   🔒 Premium
                 </span>
               </div>
@@ -243,17 +243,17 @@
             <div class="p-6 relative">
               <div class="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent z-10"></div>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6 filter blur-sm">
-                <div class="h-64 bg-gray-100 rounded-lg flex items-center justify-center">
-                  <span class="text-gray-400">Graphique de Participation</span>
+                <div class="h-64 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center">
+                  <span class="text-gray-400 dark:text-gray-500">Graphique de Participation</span>
                 </div>
-                <div class="h-64 bg-gray-100 rounded-lg flex items-center justify-center">
-                  <span class="text-gray-400">Taux de Réussite par Catégorie</span>
+                <div class="h-64 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center">
+                  <span class="text-gray-400 dark:text-gray-500">Taux de Réussite par Catégorie</span>
                 </div>
               </div>
               <div class="absolute inset-0 flex items-center justify-center z-20">
                 <div class="text-center">
-                  <h4 class="text-xl font-semibold text-gray-900 mb-2">Débloquez les Analytics Complets</h4>
-                  <p class="text-gray-600 mb-4">Visualisations interactives, exports de données et insights détaillés</p>
+                  <h4 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">Débloquez les Analytics Complets</h4>
+                  <p class="text-gray-600 dark:text-gray-400 dark:text-gray-500 mb-4">Visualisations interactives, exports de données et insights détaillés</p>
                   <router-link
                     to="/subscription"
                     class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700"
@@ -267,8 +267,8 @@
         </div>
 
         <!-- Recommendations Section -->
-        <div v-if="recommendations.length > 0" class="mt-8 bg-white rounded-lg shadow p-6">
-          <h3 class="text-lg font-semibold text-gray-900 mb-4">💡 Recommandations</h3>
+        <div v-if="recommendations.length > 0" class="mt-8 bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">💡 Recommandations</h3>
           <div class="space-y-3">
             <div
               v-for="(recommendation, index) in recommendations"
@@ -281,8 +281,8 @@
                 </svg>
               </div>
               <div>
-                <p class="text-sm font-medium text-gray-900">{{ recommendation.title }}</p>
-                <p class="text-sm text-gray-600 mt-1">{{ recommendation.description }}</p>
+                <p class="text-sm font-medium text-gray-900 dark:text-white">{{ recommendation.title }}</p>
+                <p class="text-sm text-gray-600 dark:text-gray-400 dark:text-gray-500 mt-1">{{ recommendation.description }}</p>
               </div>
             </div>
           </div>

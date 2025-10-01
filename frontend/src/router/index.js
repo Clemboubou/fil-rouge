@@ -8,7 +8,9 @@ import Register from '@/views/Register.vue'
 import Dashboard from '@/views/Dashboard.vue'
 import QuizTaking from '@/views/QuizTaking.vue'
 import QuizCreation from '@/views/QuizCreation.vue'
-import AdminDashboard from '@/views/AdminDashboard.vue'
+import MyQuizzes from '@/views/MyQuizzes.vue'
+import QuizzesBrowse from '@/views/QuizzesBrowse.vue'
+import AdminDashboard from '@/views/AdminDashboardHome.vue'
 import AdminUsers from '@/views/AdminUsers.vue'
 import AdminQuizzes from '@/views/AdminQuizzes.vue'
 import Subscription from '@/views/Subscription.vue'
@@ -53,6 +55,28 @@ const routes = [
     meta: {
       title: 'Dashboard',
       requiresAuth: true
+    },
+    beforeEnter: (to, from, next) => {
+      const authStore = useAuthStore()
+      // Redirect admin to admin dashboard
+      if (authStore.isAdmin) {
+        next('/admin')
+      } else {
+        // Update page title based on role
+        if (authStore.isStudent) {
+          document.title = 'Mon Profil | QuizMaster'
+        }
+        next()
+      }
+    }
+  },
+  {
+    path: '/quizzes',
+    name: 'QuizzesBrowse',
+    component: QuizzesBrowse,
+    meta: {
+      title: 'Découvrir les Quiz',
+      requiresAuth: true
     }
   },
   {
@@ -63,6 +87,16 @@ const routes = [
     meta: {
       title: 'Taking Quiz',
       requiresAuth: true
+    }
+  },
+  {
+    path: '/my-quizzes',
+    name: 'MyQuizzes',
+    component: MyQuizzes,
+    meta: {
+      title: 'Mes Quiz',
+      requiresAuth: true,
+      requiresTrainer: true
     }
   },
   {

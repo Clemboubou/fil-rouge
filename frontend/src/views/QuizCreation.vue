@@ -1,12 +1,12 @@
 <template>
-  <div class="min-h-screen bg-gray-50 py-8">
+  <div class="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <!-- Header -->
       <div class="mb-8">
-        <h1 class="text-3xl font-bold text-gray-900">
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
           {{ isEditMode ? 'Edit Quiz' : 'Create New Quiz' }}
         </h1>
-        <p class="mt-2 text-gray-600">
+        <p class="mt-2 text-gray-600 dark:text-gray-400 dark:text-gray-500">
           {{ isEditMode ? 'Update your quiz details and questions' : 'Design an engaging quiz for your students' }}
         </p>
       </div>
@@ -19,12 +19,12 @@
       <!-- Quiz Form -->
       <form v-else @submit.prevent="handleSubmit" class="space-y-8">
         <!-- Quiz Details -->
-        <div class="bg-white rounded-lg shadow-sm p-6">
-          <h2 class="text-lg font-semibold text-gray-900 mb-6">Quiz Details</h2>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
+          <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-6">Quiz Details</h2>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label for="title" class="block text-sm font-medium text-gray-700 mb-1">
+              <label for="title" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Quiz Title *
               </label>
               <input
@@ -36,11 +36,11 @@
                 :class="{ 'border-red-500': errors.title }"
                 placeholder="Enter quiz title"
               />
-              <p v-if="errors.title" class="mt-1 text-sm text-red-600">{{ errors.title }}</p>
+              <p v-if="errors.title" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.title }}</p>
             </div>
 
             <div>
-              <label for="category" class="block text-sm font-medium text-gray-700 mb-1">
+              <label for="category" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Category *
               </label>
               <select
@@ -58,12 +58,12 @@
                 <option value="mathematics">Mathematics</option>
                 <option value="other">Other</option>
               </select>
-              <p v-if="errors.category" class="mt-1 text-sm text-red-600">{{ errors.category }}</p>
+              <p v-if="errors.category" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.category }}</p>
             </div>
           </div>
 
           <div class="mt-6">
-            <label for="description" class="block text-sm font-medium text-gray-700 mb-1">
+            <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Description
             </label>
             <textarea
@@ -77,7 +77,7 @@
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
             <div>
-              <label for="difficulty" class="block text-sm font-medium text-gray-700 mb-1">
+              <label for="difficulty" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Difficulty Level
               </label>
               <select
@@ -92,7 +92,7 @@
             </div>
 
             <div>
-              <label for="timeLimit" class="block text-sm font-medium text-gray-700 mb-1">
+              <label for="timeLimit" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Time per Question (seconds)
               </label>
               <input
@@ -107,7 +107,7 @@
             </div>
 
             <div>
-              <label for="status" class="block text-sm font-medium text-gray-700 mb-1">
+              <label for="status" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Status
               </label>
               <select
@@ -123,9 +123,9 @@
         </div>
 
         <!-- Questions Section -->
-        <div class="bg-white rounded-lg shadow-sm p-6">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
           <div class="flex items-center justify-between mb-6">
-            <h2 class="text-lg font-semibold text-gray-900">
+            <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
               Questions ({{ quizForm.questions.length }})
             </h2>
             <button
@@ -140,8 +140,8 @@
             </button>
           </div>
 
-          <div v-if="quizForm.questions.length === 0" class="text-center py-8 text-gray-500">
-            <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div v-if="quizForm.questions.length === 0" class="text-center py-8 text-gray-500 dark:text-gray-400 dark:text-gray-500">
+            <svg class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
             <p>No questions added yet. Click "Add Question" to get started.</p>
@@ -158,7 +158,7 @@
             />
           </div>
 
-          <p v-if="errors.questions" class="mt-4 text-sm text-red-600">{{ errors.questions }}</p>
+          <p v-if="errors.questions" class="mt-4 text-sm text-red-600 dark:text-red-400">{{ errors.questions }}</p>
         </div>
 
         <!-- Form Actions -->

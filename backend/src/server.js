@@ -71,6 +71,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/quizzes', quizRoutes);
 app.use('/api/stats', statsRoutes);
+app.use('/api/admin', require('./routes/admin'));
 app.use('/api/gamification', require('./routes/gamification'));
 app.use('/api/analytics', require('./routes/analytics'));
 app.use('/api/subscription', require('./routes/subscription'));

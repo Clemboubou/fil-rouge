@@ -33,7 +33,12 @@
       "Bash(npx cypress run:*)",
       "Bash(git push:*)",
       "Bash(git reset:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(copy .env.example .env)",
+      "Bash(xcopy:*)",
+      "Bash(start cmd /k \"npm run dev\")",
+      "Bash(python:*)",
+      "Bash(del apply-dark-mode.py)"
     ],
     "deny": [],
     "ask": []

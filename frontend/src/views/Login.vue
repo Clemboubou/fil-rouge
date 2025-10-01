@@ -1,20 +1,20 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8 transition-colors duration-200">
     <div class="max-w-md w-full space-y-8">
       <div>
-        <div class="mx-auto h-12 w-12 bg-primary-600 rounded-lg flex items-center justify-center">
+        <div class="mx-auto h-12 w-12 bg-primary-600 dark:bg-primary-500 rounded-lg flex items-center justify-center">
           <span class="text-white font-bold text-xl">Q</span>
         </div>
-        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Sign in to your account
+        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white">
+          {{ $t('auth.signInToAccount') }}
         </h2>
-        <p class="mt-2 text-center text-sm text-gray-600">
-          Or
+        <p class="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
+          {{ $t('auth.or') }}
           <router-link
             to="/register"
-            class="font-medium text-primary-600 hover:text-primary-500 transition-colors"
+            class="font-medium text-primary-600 dark:text-primary-400 hover:text-primary-500 dark:hover:text-primary-300 transition-colors"
           >
-            create a new account
+            {{ $t('auth.createNewAccount') }}
           </router-link>
         </p>
       </div>
@@ -22,7 +22,7 @@
       <form class="mt-8 space-y-6" @submit.prevent="handleSubmit">
         <div class="rounded-md shadow-sm -space-y-px">
           <div>
-            <label for="email" class="sr-only">Email address</label>
+            <label for="email" class="sr-only">{{ $t('auth.emailAddress') }}</label>
             <input
               id="email"
               v-model="form.email"
@@ -31,14 +31,14 @@
               autocomplete="email"
               required
               data-cy="email-input"
-              class="relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm"
+              class="relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white bg-white dark:bg-gray-700 rounded-t-md focus:outline-none focus:ring-primary-500 dark:focus:ring-primary-400 focus:border-primary-500 dark:focus:border-primary-400 focus:z-10 sm:text-sm"
               :class="{ 'border-red-500': errors.email }"
-              placeholder="Email address"
+              :placeholder="$t('auth.emailAddress')"
             />
-            <p v-if="errors.email" data-cy="email-error" class="mt-1 text-sm text-red-600">{{ errors.email }}</p>
+            <p v-if="errors.email" data-cy="email-error" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.email }}</p>
           </div>
           <div>
-            <label for="password" class="sr-only">Password</label>
+            <label for="password" class="sr-only">{{ $t('auth.password') }}</label>
             <input
               id="password"
               v-model="form.password"
@@ -47,11 +47,11 @@
               autocomplete="current-password"
               required
               data-cy="password-input"
-              class="relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm"
+              class="relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white bg-white dark:bg-gray-700 rounded-b-md focus:outline-none focus:ring-primary-500 dark:focus:ring-primary-400 focus:border-primary-500 dark:focus:border-primary-400 focus:z-10 sm:text-sm"
               :class="{ 'border-red-500': errors.password }"
-              placeholder="Password"
+              :placeholder="$t('auth.password')"
             />
-            <p v-if="errors.password" data-cy="password-error" class="mt-1 text-sm text-red-600">{{ errors.password }}</p>
+            <p v-if="errors.password" data-cy="password-error" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.password }}</p>
           </div>
         </div>
 
@@ -62,16 +62,16 @@
               v-model="form.rememberMe"
               name="remember-me"
               type="checkbox"
-              class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
+              class="h-4 w-4 text-primary-600 dark:text-primary-500 focus:ring-primary-500 dark:focus:ring-primary-400 border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700"
             />
-            <label for="remember-me" class="ml-2 block text-sm text-gray-900">
-              Remember me
+            <label for="remember-me" class="ml-2 block text-sm text-gray-900 dark:text-gray-300">
+              {{ $t('auth.rememberMe') }}
             </label>
           </div>
 
           <div class="text-sm">
-            <a href="#" class="font-medium text-primary-600 hover:text-primary-500 transition-colors">
-              Forgot your password?
+            <a href="#" class="font-medium text-primary-600 dark:text-primary-400 hover:text-primary-500 dark:hover:text-primary-300 transition-colors">
+              {{ $t('auth.forgotPassword') }}
             </a>
           </div>
         </div>
@@ -100,30 +100,39 @@
               </svg>
               <div v-else class="h-5 w-5 animate-spin rounded-full border-2 border-primary-500 border-t-transparent"></div>
             </span>
-            {{ authStore.isLoading ? 'Signing in...' : 'Sign in' }}
+            {{ authStore.isLoading ? $t('auth.signingIn') : $t('auth.signIn') }}
           </button>
         </div>
 
         <!-- Demo credentials -->
         <div class="mt-6 p-4 bg-blue-50 rounded-md">
-          <h3 class="text-sm font-medium text-blue-800 mb-2">Demo Credentials</h3>
+          <h3 class="text-sm font-medium text-blue-800 mb-2">{{ $t('auth.demoCredentials') }}</h3>
           <div class="space-y-2 text-sm text-blue-700">
             <div>
-              <strong>Trainer:</strong> trainer@quizmaster.com / trainer123
+              <strong>Admin:</strong> admin@quizmaster.com / admin123
+              <button
+                @click="fillDemoCredentials('admin')"
+                class="ml-2 text-blue-600 hover:text-blue-800 underline"
+              >
+                {{ $t('auth.fill') }}
+              </button>
+            </div>
+            <div>
+              <strong>{{ $t('auth.trainer') }}:</strong> trainer@quizmaster.com / trainer123
               <button
                 @click="fillDemoCredentials('trainer')"
                 class="ml-2 text-blue-600 hover:text-blue-800 underline"
               >
-                Fill
+                {{ $t('auth.fill') }}
               </button>
             </div>
             <div>
-              <strong>Student:</strong> student@quizmaster.com / student123
+              <strong>{{ $t('auth.student') }}:</strong> user1@quizmaster.com / user123
               <button
                 @click="fillDemoCredentials('student')"
                 class="ml-2 text-blue-600 hover:text-blue-800 underline"
               >
-                Fill
+                {{ $t('auth.fill') }}
               </button>
             </div>
           </div>
@@ -137,9 +146,11 @@
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
+import { useLanguageStore } from '@/stores/language'
 
 const router = useRouter()
 const authStore = useAuthStore()
+const languageStore = useLanguageStore()
 
 const form = reactive({
   email: '',
@@ -153,15 +164,15 @@ const validateForm = () => {
   errors.value = {}
 
   if (!form.email) {
-    errors.value.email = 'Email is required'
+    errors.value.email = languageStore.t('auth.errors.emailRequired')
   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
-    errors.value.email = 'Please enter a valid email address'
+    errors.value.email = languageStore.t('auth.errors.emailInvalid')
   }
 
   if (!form.password) {
-    errors.value.password = 'Password is required'
+    errors.value.password = languageStore.t('auth.errors.passwordRequired')
   } else if (form.password.length < 6) {
-    errors.value.password = 'Password must be at least 6 characters'
+    errors.value.password = languageStore.t('auth.errors.passwordMinLength')
   }
 
   return Object.keys(errors.value).length === 0
@@ -195,12 +206,15 @@ const handleSubmit = async () => {
 }
 
 const fillDemoCredentials = (role) => {
-  if (role === 'trainer') {
+  if (role === 'admin') {
+    form.email = 'admin@quizmaster.com'
+    form.password = 'admin123'
+  } else if (role === 'trainer') {
     form.email = 'trainer@quizmaster.com'
     form.password = 'trainer123'
   } else if (role === 'student') {
-    form.email = 'student@quizmaster.com'
-    form.password = 'student123'
+    form.email = 'user1@quizmaster.com'
+    form.password = 'user123'
   }
 }
 </script>

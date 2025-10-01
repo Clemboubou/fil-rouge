@@ -1,14 +1,14 @@
 <template>
-  <div class="min-h-screen bg-gray-50 py-8">
+  <div class="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <!-- Header -->
       <div class="mb-8">
         <div class="flex items-center justify-between">
           <div>
-            <h1 class="text-3xl font-bold text-gray-900">
+            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
               Quiz Management
             </h1>
-            <p class="mt-2 text-gray-600">
+            <p class="mt-2 text-gray-600 dark:text-gray-400 dark:text-gray-500">
               Oversee all quizzes and manage content
             </p>
           </div>
@@ -26,14 +26,14 @@
         <div class="card">
           <div class="card-body">
             <div class="flex items-center">
-              <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
+                <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                 </svg>
               </div>
               <div class="ml-3">
-                <p class="text-sm font-medium text-gray-600">Total Quizzes</p>
-                <p class="text-xl font-bold text-gray-900">{{ quizzes.length }}</p>
+                <p class="text-sm font-medium text-gray-600 dark:text-gray-400 dark:text-gray-500">Total Quizzes</p>
+                <p class="text-xl font-bold text-gray-900 dark:text-white">{{ quizzes.length }}</p>
               </div>
             </div>
           </div>
@@ -42,14 +42,14 @@
         <div class="card">
           <div class="card-body">
             <div class="flex items-center">
-              <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div class="w-10 h-10 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center">
+                <svg class="w-5 h-5 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                 </svg>
               </div>
               <div class="ml-3">
-                <p class="text-sm font-medium text-gray-600">Published</p>
-                <p class="text-xl font-bold text-gray-900">{{ publishedCount }}</p>
+                <p class="text-sm font-medium text-gray-600 dark:text-gray-400 dark:text-gray-500">Published</p>
+                <p class="text-xl font-bold text-gray-900 dark:text-white">{{ publishedCount }}</p>
               </div>
             </div>
           </div>
@@ -58,14 +58,14 @@
         <div class="card">
           <div class="card-body">
             <div class="flex items-center">
-              <div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center">
-                <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div class="w-10 h-10 bg-yellow-100 dark:bg-yellow-900 rounded-lg flex items-center justify-center">
+                <svg class="w-5 h-5 text-yellow-600 dark:text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
               </div>
               <div class="ml-3">
-                <p class="text-sm font-medium text-gray-600">Drafts</p>
-                <p class="text-xl font-bold text-gray-900">{{ draftCount }}</p>
+                <p class="text-sm font-medium text-gray-600 dark:text-gray-400 dark:text-gray-500">Drafts</p>
+                <p class="text-xl font-bold text-gray-900 dark:text-white">{{ draftCount }}</p>
               </div>
             </div>
           </div>
@@ -74,14 +74,14 @@
         <div class="card">
           <div class="card-body">
             <div class="flex items-center">
-              <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-                <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div class="w-10 h-10 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center">
+                <svg class="w-5 h-5 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                 </svg>
               </div>
               <div class="ml-3">
-                <p class="text-sm font-medium text-gray-600">Total Attempts</p>
-                <p class="text-xl font-bold text-gray-900">{{ totalAttempts }}</p>
+                <p class="text-sm font-medium text-gray-600 dark:text-gray-400 dark:text-gray-500">Total Attempts</p>
+                <p class="text-xl font-bold text-gray-900 dark:text-white">{{ totalAttempts }}</p>
               </div>
             </div>
           </div>
@@ -106,8 +106,8 @@
                 :class="[
                   'inline-flex px-2 py-1 text-xs font-semibold rounded-full',
                   quiz.isPublished
-                    ? 'bg-green-100 text-green-800'
-                    : 'bg-yellow-100 text-yellow-800'
+                    ? 'bg-green-100 dark:bg-green-900 text-green-800'
+                    : 'bg-yellow-100 dark:bg-yellow-900 text-yellow-800'
                 ]"
               >
                 {{ quiz.isPublished ? 'Published' : 'Draft' }}
@@ -115,7 +115,7 @@
               <div class="flex items-center space-x-2">
                 <button
                   @click="viewQuizStats(quiz.id)"
-                  class="text-blue-600 hover:text-blue-800"
+                  class="text-blue-600 dark:text-blue-400 hover:text-blue-800"
                   title="View Statistics"
                 >
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -124,7 +124,7 @@
                 </button>
                 <button
                   @click="deleteQuiz(quiz.id)"
-                  class="text-red-600 hover:text-red-800"
+                  class="text-red-600 dark:text-red-400 hover:text-red-800"
                   title="Delete Quiz"
                 >
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -134,15 +134,15 @@
               </div>
             </div>
 
-            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
               {{ quiz.title }}
             </h3>
 
-            <p class="text-sm text-gray-600 mb-4 line-clamp-2">
+            <p class="text-sm text-gray-600 dark:text-gray-400 dark:text-gray-500 mb-4 line-clamp-2">
               {{ quiz.description || 'No description provided' }}
             </p>
 
-            <div class="space-y-2 text-sm text-gray-500">
+            <div class="space-y-2 text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500">
               <div class="flex items-center justify-between">
                 <span>Category:</span>
                 <span class="font-medium">{{ quiz.category || 'General' }}</span>
@@ -170,8 +170,8 @@
               </div>
             </div>
 
-            <div class="mt-4 pt-4 border-t border-gray-200">
-              <div class="flex items-center justify-between text-xs text-gray-500">
+            <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+              <div class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500">
                 <span>Created: {{ new Date(quiz.createdAt).toLocaleDateString() }}</span>
                 <span v-if="quiz.attempts?.length">{{ quiz.attempts.length }} attempts</span>
               </div>
@@ -182,11 +182,11 @@
 
       <!-- Empty State -->
       <div v-if="!isLoading && quizzes.length === 0" class="text-center py-12">
-        <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
         </svg>
-        <h3 class="mt-2 text-sm font-medium text-gray-900">No quizzes found</h3>
-        <p class="mt-1 text-sm text-gray-500">No quizzes have been created yet.</p>
+        <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-white">No quizzes found</h3>
+        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500">No quizzes have been created yet.</p>
       </div>
 
       <!-- Quiz Stats Modal -->
@@ -196,17 +196,17 @@
         @click="closeStatsModal"
       >
         <div
-          class="relative top-20 mx-auto p-5 border w-11/12 max-w-2xl shadow-lg rounded-md bg-white"
+          class="relative top-20 mx-auto p-5 border w-11/12 max-w-2xl shadow-lg rounded-md bg-white dark:bg-gray-800"
           @click.stop
         >
           <div class="mt-3">
             <div class="flex items-center justify-between mb-4">
-              <h3 class="text-lg font-medium text-gray-900">
+              <h3 class="text-lg font-medium text-gray-900 dark:text-white">
                 Quiz Statistics: {{ selectedQuiz?.title }}
               </h3>
               <button
                 @click="closeStatsModal"
-                class="text-gray-400 hover:text-gray-600"
+                class="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:text-gray-400 dark:text-gray-500"
               >
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -217,22 +217,22 @@
             <div v-if="quizStats" class="space-y-4">
               <div class="grid grid-cols-2 gap-4">
                 <div class="bg-blue-50 p-4 rounded-lg">
-                  <p class="text-sm text-blue-600">Total Attempts</p>
+                  <p class="text-sm text-blue-600 dark:text-blue-400">Total Attempts</p>
                   <p class="text-2xl font-bold text-blue-900">{{ quizStats.totalAttempts }}</p>
                 </div>
                 <div class="bg-green-50 p-4 rounded-lg">
-                  <p class="text-sm text-green-600">Average Score</p>
+                  <p class="text-sm text-green-600 dark:text-green-400">Average Score</p>
                   <p class="text-2xl font-bold text-green-900">{{ quizStats.averageScore }}%</p>
                 </div>
               </div>
 
               <div class="grid grid-cols-2 gap-4">
                 <div class="bg-yellow-50 p-4 rounded-lg">
-                  <p class="text-sm text-yellow-600">Best Score</p>
+                  <p class="text-sm text-yellow-600 dark:text-yellow-500">Best Score</p>
                   <p class="text-2xl font-bold text-yellow-900">{{ quizStats.bestScore }}</p>
                 </div>
                 <div class="bg-red-50 p-4 rounded-lg">
-                  <p class="text-sm text-red-600">Worst Score</p>
+                  <p class="text-sm text-red-600 dark:text-red-400">Worst Score</p>
                   <p class="text-2xl font-bold text-red-900">{{ quizStats.worstScore }}</p>
                 </div>
               </div>
@@ -282,13 +282,25 @@ const loadQuizzes = async () => {
   try {
     isLoading.value = true
     const response = await adminAPI.getAllQuizzes()
-    quizzes.value = response.data?.quizzes || response.data || response
+    // Extract quizzes array from response
+    if (response.data?.data?.quizzes) {
+      quizzes.value = response.data.data.quizzes
+    } else if (response.data?.quizzes) {
+      quizzes.value = response.data.quizzes
+    } else if (Array.isArray(response.data)) {
+      quizzes.value = response.data
+    } else {
+      quizzes.value = []
+      console.error('Unexpected response structure:', response)
+    }
   } catch (error) {
     console.error('Error loading quizzes:', error)
     window.showToast?.({
       type: 'error',
-      message: 'Failed to load quizzes'
+      title: 'Erreur',
+      message: 'Impossible de charger les quiz'
     })
+    quizzes.value = []
   } finally {
     isLoading.value = false
   }
@@ -317,13 +329,19 @@ const viewQuizStats = async (quizId) => {
   try {
     selectedQuiz.value = quizzes.value.find(q => q.id === quizId)
     const response = await adminAPI.getQuizStats(quizId)
-    quizStats.value = response.data
+    // Extract stats from response
+    if (response.data?.data) {
+      quizStats.value = response.data.data
+    } else {
+      quizStats.value = response.data
+    }
     showStatsModal.value = true
   } catch (error) {
     console.error('Error loading quiz stats:', error)
     window.showToast?.({
       type: 'error',
-      message: 'Failed to load quiz statistics'
+      title: 'Erreur',
+      message: 'Impossible de charger les statistiques du quiz'
     })
   }
 }

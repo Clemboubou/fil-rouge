@@ -197,7 +197,13 @@ export const useAuthStore = defineStore('auth', () => {
   const getIntendedRoute = () => {
     const route = intendedRoute.value
     intendedRoute.value = null
-    return route || '/dashboard'
+
+    // If no intended route, redirect based on role
+    if (!route) {
+      return user.value?.role === 'admin' ? '/admin' : '/dashboard'
+    }
+
+    return route
   }
 
   // Check if user has specific permission

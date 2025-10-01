@@ -121,13 +121,13 @@ export const adminAPI = {
   reactivateUser: (id) => api.put(`/users/${id}/reactivate`),
 
   // Quiz management
-  getAllQuizzes: () => api.get('/quizzes?page=1&limit=50'),
+  getAllQuizzes: () => api.get('/quizzes?page=1&limit=100'),
   deleteQuiz: (id) => api.delete(`/quizzes/${id}`),
 
   // Statistics
-  getAdminStats: () => api.get('/stats/admin/dashboard'),
-  getQuizStats: (id) => api.get(`/stats/quiz/${id}`),
-  getUserStats: (id) => api.get(`/stats/user/${id}`)
+  getAdminStats: () => api.get('/admin/stats'),
+  getQuizStats: (id) => api.get(`/quizzes/${id}/stats`),
+  getUserStats: (id) => api.get(`/users/stats/${id}`)
 }
 
 // Statistics API endpoints

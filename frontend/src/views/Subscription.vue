@@ -1,23 +1,22 @@
 <template>
-  <div class="min-h-screen bg-gray-50 py-8">
+  <div class="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <!-- Header -->
       <div class="text-center mb-8">
-        <h1 class="text-3xl font-bold text-gray-900 mb-4">
-          Choisissez votre plan
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+          {{ $t('subscription.choosePlan') }}
         </h1>
-        <p class="text-gray-600 max-w-2xl mx-auto">
-          Débloquez toutes les fonctionnalités de QuizMaster avec notre plan Premium.
-          Créez des quiz illimités et accédez aux analytics avancés.
+        <p class="text-gray-600 dark:text-gray-400 dark:text-gray-500 max-w-2xl mx-auto">
+          {{ $t('subscription.choosePlan') === 'Choose your plan' ? 'Unlock all QuizMaster features with our Premium plan. Create unlimited quizzes and access advanced analytics.' : 'Débloquez toutes les fonctionnalités de QuizMaster avec notre plan Premium. Créez des quiz illimités et accédez aux analytics avancés.' }}
         </p>
       </div>
 
       <!-- Current Subscription Status -->
-      <div v-if="subscriptionStatus" class="mb-8 p-6 bg-white rounded-lg shadow-sm border">
+      <div v-if="subscriptionStatus" class="mb-8 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm border">
         <div class="flex items-center justify-between">
           <div>
-            <h3 class="text-lg font-semibold text-gray-900">Plan actuel</h3>
-            <p class="text-gray-600">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Plan actuel</h3>
+            <p class="text-gray-600 dark:text-gray-400 dark:text-gray-500">
               <span :class="subscriptionStatus.plan === 'premium' ? 'text-yellow-600' : 'text-gray-600'" class="font-medium">
                 {{ subscriptionStatus.plan === 'premium' ? 'Premium' : 'Gratuit' }}
               </span>
@@ -63,12 +62,12 @@
       <!-- Pricing Plans -->
       <div class="grid md:grid-cols-2 gap-8 mb-8">
         <!-- Free Plan -->
-        <div class="bg-white rounded-lg shadow-sm border p-6">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border p-6">
           <div class="text-center">
-            <h3 class="text-xl font-semibold text-gray-900 mb-2">Plan Gratuit</h3>
-            <div class="text-3xl font-bold text-gray-900 mb-4">
+            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">Plan Gratuit</h3>
+            <div class="text-3xl font-bold text-gray-900 dark:text-white mb-4">
               0€
-              <span class="text-base font-normal text-gray-600">/mois</span>
+              <span class="text-base font-normal text-gray-600 dark:text-gray-400 dark:text-gray-500">/mois</span>
             </div>
           </div>
 
@@ -77,25 +76,25 @@
               <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
               </svg>
-              <span class="text-gray-700">5 quiz maximum (formateurs)</span>
+              <span class="text-gray-700 dark:text-gray-300">5 quiz maximum (formateurs)</span>
             </li>
             <li class="flex items-center">
               <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
               </svg>
-              <span class="text-gray-700">Accès à tous les quiz</span>
+              <span class="text-gray-700 dark:text-gray-300">Accès à tous les quiz</span>
             </li>
             <li class="flex items-center">
               <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
               </svg>
-              <span class="text-gray-700">Système de points et badges</span>
+              <span class="text-gray-700 dark:text-gray-300">Système de points et badges</span>
             </li>
             <li class="flex items-center">
               <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
               </svg>
-              <span class="text-gray-700">Classements basiques</span>
+              <span class="text-gray-700 dark:text-gray-300">Classements basiques</span>
             </li>
           </ul>
 
@@ -116,7 +115,7 @@
         </div>
 
         <!-- Premium Plan -->
-        <div class="bg-white rounded-lg shadow-sm border-2 border-yellow-500 p-6 relative">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border-2 border-yellow-500 p-6 relative">
           <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
             <span class="bg-yellow-500 text-white px-4 py-1 rounded-full text-sm font-medium">
               Recommandé
@@ -124,10 +123,10 @@
           </div>
 
           <div class="text-center">
-            <h3 class="text-xl font-semibold text-gray-900 mb-2">Plan Premium</h3>
-            <div class="text-3xl font-bold text-gray-900 mb-4">
+            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">Plan Premium</h3>
+            <div class="text-3xl font-bold text-gray-900 dark:text-white mb-4">
               9,99€
-              <span class="text-base font-normal text-gray-600">/mois</span>
+              <span class="text-base font-normal text-gray-600 dark:text-gray-400 dark:text-gray-500">/mois</span>
             </div>
           </div>
 
@@ -136,31 +135,31 @@
               <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
               </svg>
-              <span class="text-gray-700">Quiz illimités</span>
+              <span class="text-gray-700 dark:text-gray-300">Quiz illimités</span>
             </li>
             <li class="flex items-center">
               <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
               </svg>
-              <span class="text-gray-700">Analytics avancés</span>
+              <span class="text-gray-700 dark:text-gray-300">Analytics avancés</span>
             </li>
             <li class="flex items-center">
               <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
               </svg>
-              <span class="text-gray-700">Export des données (CSV, PDF)</span>
+              <span class="text-gray-700 dark:text-gray-300">Export des données (CSV, PDF)</span>
             </li>
             <li class="flex items-center">
               <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
               </svg>
-              <span class="text-gray-700">Support prioritaire</span>
+              <span class="text-gray-700 dark:text-gray-300">Support prioritaire</span>
             </li>
             <li class="flex items-center">
               <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
               </svg>
-              <span class="text-gray-700">Branding personnalisé</span>
+              <span class="text-gray-700 dark:text-gray-300">Branding personnalisé</span>
             </li>
           </ul>
 
@@ -184,48 +183,48 @@
       </div>
 
       <!-- Features Comparison -->
-      <div class="bg-white rounded-lg shadow-sm border p-6">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Comparaison détaillée</h3>
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border p-6">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Comparaison détaillée</h3>
 
         <div class="overflow-x-auto">
           <table class="w-full">
             <thead>
               <tr class="border-b">
-                <th class="text-left py-3 px-4 font-medium text-gray-900">Fonctionnalité</th>
-                <th class="text-center py-3 px-4 font-medium text-gray-900">Gratuit</th>
-                <th class="text-center py-3 px-4 font-medium text-gray-900">Premium</th>
+                <th class="text-left py-3 px-4 font-medium text-gray-900 dark:text-white">Fonctionnalité</th>
+                <th class="text-center py-3 px-4 font-medium text-gray-900 dark:text-white">Gratuit</th>
+                <th class="text-center py-3 px-4 font-medium text-gray-900 dark:text-white">Premium</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-200">
               <tr>
-                <td class="py-3 px-4 text-gray-700">Création de quiz (formateurs)</td>
+                <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Création de quiz (formateurs)</td>
                 <td class="py-3 px-4 text-center">5 max</td>
-                <td class="py-3 px-4 text-center text-green-600">Illimité</td>
+                <td class="py-3 px-4 text-center text-green-600 dark:text-green-400">Illimité</td>
               </tr>
               <tr>
-                <td class="py-3 px-4 text-gray-700">Participation aux quiz</td>
-                <td class="py-3 px-4 text-center text-green-600">✓</td>
-                <td class="py-3 px-4 text-center text-green-600">✓</td>
+                <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Participation aux quiz</td>
+                <td class="py-3 px-4 text-center text-green-600 dark:text-green-400">✓</td>
+                <td class="py-3 px-4 text-center text-green-600 dark:text-green-400">✓</td>
               </tr>
               <tr>
-                <td class="py-3 px-4 text-gray-700">Système de gamification</td>
-                <td class="py-3 px-4 text-center text-green-600">✓</td>
-                <td class="py-3 px-4 text-center text-green-600">✓</td>
+                <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Système de gamification</td>
+                <td class="py-3 px-4 text-center text-green-600 dark:text-green-400">✓</td>
+                <td class="py-3 px-4 text-center text-green-600 dark:text-green-400">✓</td>
               </tr>
               <tr>
-                <td class="py-3 px-4 text-gray-700">Analytics avancés</td>
-                <td class="py-3 px-4 text-center text-gray-400">✗</td>
-                <td class="py-3 px-4 text-center text-green-600">✓</td>
+                <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Analytics avancés</td>
+                <td class="py-3 px-4 text-center text-gray-400 dark:text-gray-500">✗</td>
+                <td class="py-3 px-4 text-center text-green-600 dark:text-green-400">✓</td>
               </tr>
               <tr>
-                <td class="py-3 px-4 text-gray-700">Export de données</td>
-                <td class="py-3 px-4 text-center text-gray-400">✗</td>
-                <td class="py-3 px-4 text-center text-green-600">✓</td>
+                <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Export de données</td>
+                <td class="py-3 px-4 text-center text-gray-400 dark:text-gray-500">✗</td>
+                <td class="py-3 px-4 text-center text-green-600 dark:text-green-400">✓</td>
               </tr>
               <tr>
-                <td class="py-3 px-4 text-gray-700">Support</td>
+                <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Support</td>
                 <td class="py-3 px-4 text-center">Standard</td>
-                <td class="py-3 px-4 text-center text-green-600">Prioritaire</td>
+                <td class="py-3 px-4 text-center text-green-600 dark:text-green-400">Prioritaire</td>
               </tr>
             </tbody>
           </table>
@@ -234,19 +233,19 @@
 
       <!-- FAQ -->
       <div class="mt-12">
-        <h3 class="text-lg font-semibold text-gray-900 mb-6 text-center">Questions fréquentes</h3>
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-6 text-center">Questions fréquentes</h3>
         <div class="space-y-4 max-w-2xl mx-auto">
-          <div class="bg-white rounded-lg border p-4">
-            <h4 class="font-medium text-gray-900 mb-2">Puis-je annuler mon abonnement à tout moment ?</h4>
-            <p class="text-gray-600 text-sm">Oui, vous pouvez annuler votre abonnement à tout moment. Votre accès Premium restera actif jusqu'à la fin de votre période de facturation.</p>
+          <div class="bg-white dark:bg-gray-800 rounded-lg border p-4">
+            <h4 class="font-medium text-gray-900 dark:text-white mb-2">Puis-je annuler mon abonnement à tout moment ?</h4>
+            <p class="text-gray-600 dark:text-gray-400 dark:text-gray-500 text-sm">Oui, vous pouvez annuler votre abonnement à tout moment. Votre accès Premium restera actif jusqu'à la fin de votre période de facturation.</p>
           </div>
-          <div class="bg-white rounded-lg border p-4">
-            <h4 class="font-medium text-gray-900 mb-2">Que se passe-t-il si j'atteins la limite de 5 quiz ?</h4>
-            <p class="text-gray-600 text-sm">Vous ne pourrez plus créer de nouveaux quiz tant que vous n'aurez pas supprimé des quiz existants ou que vous n'aurez pas souscrit au plan Premium.</p>
+          <div class="bg-white dark:bg-gray-800 rounded-lg border p-4">
+            <h4 class="font-medium text-gray-900 dark:text-white mb-2">Que se passe-t-il si j'atteins la limite de 5 quiz ?</h4>
+            <p class="text-gray-600 dark:text-gray-400 dark:text-gray-500 text-sm">Vous ne pourrez plus créer de nouveaux quiz tant que vous n'aurez pas supprimé des quiz existants ou que vous n'aurez pas souscrit au plan Premium.</p>
           </div>
-          <div class="bg-white rounded-lg border p-4">
-            <h4 class="font-medium text-gray-900 mb-2">Le paiement est-il sécurisé ?</h4>
-            <p class="text-gray-600 text-sm">Oui, tous les paiements sont traités de manière sécurisée par Stripe, conforme aux normes PCI DSS.</p>
+          <div class="bg-white dark:bg-gray-800 rounded-lg border p-4">
+            <h4 class="font-medium text-gray-900 dark:text-white mb-2">Le paiement est-il sécurisé ?</h4>
+            <p class="text-gray-600 dark:text-gray-400 dark:text-gray-500 text-sm">Oui, tous les paiements sont traités de manière sécurisée par Stripe, conforme aux normes PCI DSS.</p>
           </div>
         </div>
       </div>
@@ -259,14 +258,14 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { subscriptionAPI } from '@/services/api'
-import { loadStripe } from '@stripe/stripe-js'
+// import { loadStripe } from '@stripe/stripe-js'
 
 const router = useRouter()
 const authStore = useAuthStore()
 
 const loading = ref(false)
 const subscriptionStatus = ref(null)
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY)
+// const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY)
 
 const fetchSubscriptionStatus = async () => {
   try {
@@ -281,11 +280,14 @@ const subscribeToPremium = async () => {
   try {
     loading.value = true
 
-    const response = await subscriptionAPI.createCheckoutSession('price_premium_monthly')
+    // Simulation pour la démo - pas de vrai paiement
+    alert('🎉 Mode démo : Cette fonctionnalité afficherait normalement le formulaire de paiement Stripe.\n\nPour activer le vrai système de paiement, configurez votre clé Stripe dans .env')
 
-    if (response.data.data.url) {
-      window.location.href = response.data.data.url
-    }
+    // Code réel commenté :
+    // const response = await subscriptionAPI.createCheckoutSession('price_premium_monthly')
+    // if (response.data.data.url) {
+    //   window.location.href = response.data.data.url
+    // }
   } catch (error) {
     console.error('Error creating checkout session:', error)
     alert('Erreur lors de la création de la session de paiement')
@@ -366,7 +368,7 @@ onMounted(() => {
 }
 
 .btn-secondary {
-  @apply inline-flex items-center justify-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed;
+  @apply inline-flex items-center justify-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm font-medium rounded-md shadow-sm text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed;
 }
 
 .btn-danger {
@@ -374,6 +376,6 @@ onMounted(() => {
 }
 
 .btn-disabled {
-  @apply inline-flex items-center justify-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-500 bg-gray-100 cursor-not-allowed;
+  @apply inline-flex items-center justify-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm font-medium rounded-md shadow-sm text-gray-500 dark:text-gray-400 dark:text-gray-500 bg-gray-100 dark:bg-gray-800 cursor-not-allowed;
 }
 </style>

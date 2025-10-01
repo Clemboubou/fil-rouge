@@ -1,25 +1,25 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
+  <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
     <!-- Loading State -->
     <div v-if="quizStore.isLoading" class="flex justify-center items-center min-h-screen">
       <div class="text-center">
         <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto mb-4"></div>
-        <p class="text-gray-600">Loading quiz...</p>
+        <p class="text-gray-600 dark:text-gray-400 dark:text-gray-500">Loading quiz...</p>
       </div>
     </div>
 
     <!-- Quiz Content -->
     <div v-else-if="quizStore.isQuizActive && quizStore.currentQuestion" class="max-w-4xl mx-auto px-4 py-8">
       <!-- Quiz Header -->
-      <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-6">
         <div class="flex items-center justify-between mb-4">
           <div>
-            <h1 class="text-2xl font-bold text-gray-900">{{ quizStore.currentQuiz?.title }}</h1>
-            <p class="text-gray-600">{{ quizStore.currentQuiz?.description }}</p>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{{ quizStore.currentQuiz?.title }}</h1>
+            <p class="text-gray-600 dark:text-gray-400 dark:text-gray-500">{{ quizStore.currentQuiz?.description }}</p>
           </div>
           <div class="text-right">
-            <div class="text-sm text-gray-500 mb-1">Progress</div>
-            <div class="text-lg font-semibold text-gray-900">
+            <div class="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500 mb-1">Progress</div>
+            <div class="text-lg font-semibold text-gray-900 dark:text-white">
               {{ quizStore.currentQuestionIndex + 1 }} / {{ quizStore.totalQuestions }}
             </div>
           </div>
@@ -49,14 +49,14 @@
               </svg>
               {{ formatTime(timeRemaining) }}
             </div>
-            <div class="text-sm text-gray-500">
+            <div class="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500">
               Question {{ quizStore.currentQuestionIndex + 1 }} of {{ quizStore.totalQuestions }}
             </div>
           </div>
 
           <button
             @click="endQuizEarly"
-            class="text-red-600 hover:text-red-800 text-sm font-medium"
+            class="text-red-600 dark:text-red-400 hover:text-red-800 text-sm font-medium"
           >
             End Quiz
           </button>
@@ -64,9 +64,9 @@
       </div>
 
       <!-- Question Card -->
-      <div class="bg-white rounded-lg shadow-sm p-8 mb-6">
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-8 mb-6">
         <div class="mb-6">
-          <h2 class="text-xl font-semibold text-gray-900 mb-4">
+          <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">
             {{ quizStore.currentQuestion.text || quizStore.currentQuestion.question }}
           </h2>
 
@@ -88,7 +88,7 @@
             class="relative"
           >
             <label
-              class="flex items-center p-4 border-2 rounded-lg cursor-pointer transition-colors hover:bg-gray-50"
+              class="flex items-center p-4 border-2 rounded-lg cursor-pointer transition-colors hover:bg-gray-50 dark:hover:bg-gray-700 dark:bg-gray-900"
               :class="{
                 'border-primary-500 bg-primary-50': selectedAnswer === option,
                 'border-gray-200': selectedAnswer !== option
@@ -109,10 +109,10 @@
               >
                 <div
                   v-if="selectedAnswer === option"
-                  class="w-2 h-2 rounded-full bg-white"
+                  class="w-2 h-2 rounded-full bg-white dark:bg-gray-800"
                 ></div>
               </div>
-              <span class="text-gray-900">{{ option }}</span>
+              <span class="text-gray-900 dark:text-white">{{ option }}</span>
             </label>
           </div>
         </div>
@@ -131,7 +131,7 @@
           Previous
         </button>
 
-        <div class="text-sm text-gray-500">
+        <div class="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500">
           {{ Object.keys(quizStore.currentAnswers).length }} / {{ quizStore.totalQuestions }} answered
         </div>
 
@@ -161,7 +161,7 @@
 
     <!-- Quiz Results -->
     <div v-else-if="quizStore.quizResults" class="max-w-4xl mx-auto px-4 py-8">
-      <div class="bg-white rounded-lg shadow-sm p-8 text-center">
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-8 text-center">
         <div class="mb-8">
           <div
             class="w-24 h-24 rounded-full mx-auto mb-4 flex items-center justify-center"
@@ -186,27 +186,27 @@
             </svg>
           </div>
 
-          <h2 class="text-3xl font-bold text-gray-900 mb-2">Quiz Completed!</h2>
-          <p class="text-gray-600 mb-6">{{ quizStore.currentQuiz?.title }}</p>
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Quiz Completed!</h2>
+          <p class="text-gray-600 dark:text-gray-400 dark:text-gray-500 mb-6">{{ quizStore.currentQuiz?.title }}</p>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <div class="text-center">
-              <div class="text-3xl font-bold text-primary-600 mb-1">
+              <div class="text-3xl font-bold text-primary-600 dark:text-primary-400 mb-1">
                 {{ quizStore.quizResults.correctAnswers }}/{{ quizStore.quizResults.totalQuestions }}
               </div>
-              <div class="text-sm text-gray-500">Correct Answers</div>
+              <div class="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500">Correct Answers</div>
             </div>
             <div class="text-center">
-              <div class="text-3xl font-bold text-gray-600 mb-1">
+              <div class="text-3xl font-bold text-gray-600 dark:text-gray-400 dark:text-gray-500 mb-1">
                 {{ quizStore.quizResults.percentage || Math.round((quizStore.quizResults.correctAnswers / quizStore.quizResults.totalQuestions) * 100) }}%
               </div>
-              <div class="text-sm text-gray-500">Score</div>
+              <div class="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500">Score</div>
             </div>
             <div class="text-center">
               <div class="text-3xl font-bold text-warning-600 mb-1">
                 {{ quizStore.quizResults.timeTaken ? quizStore.quizResults.timeTaken + 's' : 'N/A' }}
               </div>
-              <div class="text-sm text-gray-500">Time Taken</div>
+              <div class="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500">Time Taken</div>
             </div>
           </div>
 
@@ -230,9 +230,9 @@
 
     <!-- Quiz Not Found -->
     <div v-else class="max-w-4xl mx-auto px-4 py-8">
-      <div class="bg-white rounded-lg shadow-sm p-8 text-center">
-        <h2 class="text-2xl font-bold text-gray-900 mb-4">Quiz Not Available</h2>
-        <p class="text-gray-600 mb-6">
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-8 text-center">
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Quiz Not Available</h2>
+        <p class="text-gray-600 dark:text-gray-400 dark:text-gray-500 mb-6">
           The quiz you're trying to access is not available or has been removed.
         </p>
         <router-link to="/dashboard" class="btn-primary">
