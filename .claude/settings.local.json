@@ -42,7 +42,14 @@
       "Bash(find:*)",
       "Bash(/dev/null)",
       "Bash(git rm:*)",
-      "Bash(git filter-branch:*)"
+      "Bash(git filter-branch:*)",
+      "Bash(git for-each-ref:*)",
+      "Bash(foreach { git update-ref -d $_ })",
+      "Bash(git update-ref:*)",
+      "Bash(git reflog:*)",
+      "Bash(git gc:*)",
+      "Bash(git stash:*)",
+      "Bash(del replace-secret.ps1)"
     ],
     "deny": [],
     "ask": []
