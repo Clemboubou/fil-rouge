@@ -40,7 +40,9 @@
       "Bash(python:*)",
       "Bash(del apply-dark-mode.py)",
       "Bash(find:*)",
-      "Bash(/dev/null)"
+      "Bash(/dev/null)",
+      "Bash(git rm:*)",
+      "Bash(git filter-branch:*)"
     ],
     "deny": [],
     "ask": []
