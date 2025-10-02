@@ -14,6 +14,7 @@ const router = express.Router();
  *       Permet à un nouvel utilisateur de créer un compte sur la plateforme QuizMaster.
  *       Un email de confirmation sera envoyé (en développement, l'account est directement activé).
  *     tags: [Authentication]
+ *     security: []
  *     requestBody:
  *       required: true
  *       content:
@@ -94,7 +95,39 @@ router.post('/register',
   authController.register
 );
 
-// Verify email with code
+/**
+ * @swagger
+ * /auth/verify-email:
+ *   post:
+ *     summary: Vérifier l'adresse email
+ *     description: Vérifier l'adresse email avec le code de confirmation reçu par email
+ *     tags: [Authentication]
+ *     security: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - code
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: "jean.dupont@example.com"
+ *               code:
+ *                 type: string
+ *                 minLength: 6
+ *                 maxLength: 6
+ *                 example: "123456"
+ *     responses:
+ *       200:
+ *         description: Email vérifié avec succès
+ *       400:
+ *         description: Code invalide ou expiré
+ */
 router.post('/verify-email',
   [
     body('email').isEmail().normalizeEmail(),
@@ -103,7 +136,33 @@ router.post('/verify-email',
   authController.verifyEmail
 );
 
-// Resend verification code
+/**
+ * @swagger
+ * /auth/resend-verification:
+ *   post:
+ *     summary: Renvoyer le code de vérification
+ *     description: Renvoie un nouveau code de vérification par email
+ *     tags: [Authentication]
+ *     security: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: "jean.dupont@example.com"
+ *     responses:
+ *       200:
+ *         description: Code renvoyé avec succès
+ *       400:
+ *         description: Erreur lors de l'envoi
+ */
 router.post('/resend-verification',
   [
     body('email').isEmail().normalizeEmail()

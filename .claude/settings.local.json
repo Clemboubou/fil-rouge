@@ -38,7 +38,9 @@
       "Bash(xcopy:*)",
       "Bash(start cmd /k \"npm run dev\")",
       "Bash(python:*)",
-      "Bash(del apply-dark-mode.py)"
+      "Bash(del apply-dark-mode.py)",
+      "Bash(find:*)",
+      "Bash(/dev/null)"
     ],
     "deny": [],
     "ask": []
