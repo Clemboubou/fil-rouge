@@ -47,7 +47,7 @@ services:
       RATE_LIMIT_MAX_REQUESTS: 100
       BCRYPT_ROUNDS: 12
       SENDGRID_API_KEY: ${SENDGRID_API_KEY:-your-sendgrid-api-key-here}
-      SENDGRID_FROM_EMAIL: clement.bou57@outlook.com
+      SENDGRID_FROM_EMAIL: ${SENDGRID_FROM_EMAIL:-your-email@example.com}
       SENDGRID_FROM_NAME: QuizMaster
     ports:
       - "5000:5000"
