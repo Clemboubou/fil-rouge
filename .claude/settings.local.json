@@ -49,7 +49,9 @@
       "Bash(git reflog:*)",
       "Bash(git gc:*)",
       "Bash(git stash:*)",
-      "Bash(del replace-secret.ps1)"
+      "Bash(del replace-secret.ps1)",
+      "Bash(npm run build:*)",
+      "Bash(npm test:*)"
     ],
     "deny": [],
     "ask": []

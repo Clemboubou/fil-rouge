@@ -1,5 +1,13 @@
 // Vitest setup file
 import { config } from '@vue/test-utils'
+import { vi } from 'vitest'
+
+// Mock TextEncoder/TextDecoder for jsdom
+if (typeof global.TextEncoder === 'undefined') {
+  const { TextEncoder, TextDecoder } = await import('util')
+  global.TextEncoder = TextEncoder
+  global.TextDecoder = TextDecoder
+}
 
 // Global test configuration
 config.global.mocks = {
@@ -28,6 +36,15 @@ Object.defineProperty(window, 'localStorage', {
   },
   writable: true,
 })
+
+// Mock cookies
+vi.mock('js-cookie', () => ({
+  default: {
+    get: vi.fn(() => null),
+    set: vi.fn(),
+    remove: vi.fn()
+  }
+}))
 
 // Mock fetch
 global.fetch = vi.fn()
